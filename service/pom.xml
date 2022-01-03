@@ -114,10 +114,17 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
-
+<!--引入本项目模块-->
         <dependency>
             <groupId>com.zy</groupId>
             <artifactId>service_base</artifactId>
+<!--       引入swagger来发送请求和规范api     -->
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zy</groupId>
+            <artifactId>common_utils</artifactId>
+<!--            引入工具类 统一返回结果-->
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

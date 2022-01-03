@@ -1,6 +1,7 @@
 package com.zy.demo.eduservice.controller;
 
 
+import com.zy.commonutils.R;
 import com.zy.demo.eduservice.entity.EduTeacher;
 import com.zy.demo.eduservice.service.EduTeacherService;
 import io.swagger.annotations.Api;
@@ -29,17 +30,20 @@ public class EduTeacherController {
 
     @ApiOperation(value = "所有讲师列表")
     @GetMapping("/findall")
-    public List<EduTeacher> findAll(){
+    public R findAll(){
         List<EduTeacher> list = eduTeacherService.list(null);
-        return list;
+        R r = R.ok().data("key", list);
+        return r;
     }
 
     @ApiOperation(value = "删除老师更具id")
     @DeleteMapping("{id}")
-    public boolean removeById(
+    public R removeById(
             @ApiParam(name = "id", value = "讲师ID", required = true)
             @PathVariable String id){
-        return eduTeacherService.removeById(id);
+        boolean b = eduTeacherService.removeById(id);
+
+        return b?R.ok():R.error();
     }
 
 }
