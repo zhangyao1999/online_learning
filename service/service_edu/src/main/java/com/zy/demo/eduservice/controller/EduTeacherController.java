@@ -1,8 +1,10 @@
 package com.zy.demo.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.commonutils.R;
 import com.zy.demo.eduservice.entity.EduTeacher;
+import com.zy.demo.eduservice.entity.TeacherQuery;
 import com.zy.demo.eduservice.service.EduTeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,5 +48,41 @@ public class EduTeacherController {
         return b?R.ok():R.error();
     }
 
+
+    @ApiOperation (value = "分页讲师列表")
+    @GetMapping ("find/{page}/{limit}")
+    public R pageQuery(
+            @ApiParam (name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
+
+            @ApiParam (name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit) {
+        Page<EduTeacher> pageParam = new Page<>(page, limit);
+        eduTeacherService.page(pageParam, null);
+        List<EduTeacher> records = pageParam.getRecords();
+        long total = pageParam.getTotal();
+        return R.ok().data("total", total).data("rows", records);
+    }
+
+    @ApiOperation(value = "分页讲师列表带条件")
+    @GetMapping("{page}/{limit}")
+    public R pageQuery(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
+
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit,
+
+            @ApiParam(name = "teacherQuery", value = "查询对象", required = false)
+                    TeacherQuery teacherQuery){
+
+        Page<EduTeacher> pageParam = new Page<>(page, limit);
+
+        eduTeacherService.pageQuery(pageParam, teacherQuery);//service 调用pagequery方法会把pageparam这个参数给放值 下边可以直接调用。
+        List<EduTeacher> records = pageParam.getRecords();
+        long total = pageParam.getTotal();
+
+        return  R.ok().data("total", total).data("rows", records);
+    }
 }
 

@@ -55,6 +55,7 @@ public class EduTeacher implements Serializable {
     private Boolean isDeleted;
 
     @ApiModelProperty(value = "创建时间")
+
     private Date gmtCreate;
 
     @ApiModelProperty(value = "更新时间")
