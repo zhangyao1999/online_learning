@@ -3,9 +3,11 @@ package com.zy.demo.eduservice.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.commonutils.R;
+import com.zy.commonutils.ResultCode;
 import com.zy.demo.eduservice.entity.EduTeacher;
 import com.zy.demo.eduservice.entity.TeacherQuery;
 import com.zy.demo.eduservice.service.EduTeacherService;
+import com.zy.servicebase.config.ExceptionHandler.MyException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -96,6 +98,13 @@ public class EduTeacherController {
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id){
         EduTeacher byId = eduTeacherService.getById(id);
+//        try {
+//            int i = 10/0;
+//
+//        }catch (Exception e){
+//            throw new MyException(ResultCode.ERROR,"自定义异常");
+//
+//        }
         return R.ok().data("teacher",byId);
     }
     @ApiOperation("修改老师信息")

@@ -16,7 +16,7 @@ public class R {
     private Boolean success;
 
     @ApiModelProperty(value = "返回码")
-    private ResultCode code;
+    private Integer code;
 
     @ApiModelProperty(value = "返回消息")
     private String message;
@@ -52,7 +52,7 @@ public class R {
         return this;
     }
 
-    public R code(ResultCode code){
+    public R code(Integer code){
         this.setCode(code);
         return this;
     }

@@ -7,17 +7,9 @@ import lombok.Data;
  * @create 2022/1/3 19:51
  */
 
-public enum ResultCode {
-    SUCCESS(20000) ,
-    ERROR(20001);
+public interface ResultCode {
 
-    private Integer code ;
+    public static Integer SUCCESS = 20000;
 
-    private ResultCode (Integer integer){
-        this.code=integer;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
+    public static Integer ERROR = 20001;
 }
