@@ -24,9 +24,10 @@ import java.util.List;
  * @author zy
  * @since 2022-01-03
  */
-@Api(description="讲师管理")
+@Api("讲师管理")
 @RestController
-@RequestMapping("/eduservice/teacher")
+@RequestMapping("/eduservice/edu-teacher")
+@CrossOrigin
 public class EduTeacherController {
 
     @Autowired
@@ -67,7 +68,7 @@ public class EduTeacherController {
     }
 
     @ApiOperation(value = "分页讲师列表带条件")
-    @GetMapping("{page}/{limit}")
+    @PostMapping("find/{page}/{limit}")
     public R pageQuery(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable Long page,
@@ -76,7 +77,8 @@ public class EduTeacherController {
             @PathVariable Long limit,
 
             @ApiParam(name = "teacherQuery", value = "查询对象", required = false)
-                    TeacherQuery teacherQuery){
+            @RequestBody
+            TeacherQuery teacherQuery){
 
         Page<EduTeacher> pageParam = new Page<>(page, limit);
 
