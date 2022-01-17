@@ -110,7 +110,7 @@ public class EduTeacherController {
         return R.ok().data("teacher",byId);
     }
     @ApiOperation("修改老师信息")
-    @PostMapping ("update/by/{id}")
+    @PostMapping ("update")
     public R updateById(
             @ApiParam (name = "teacher", value = "讲师对象", required = true)
             @RequestBody EduTeacher teacher) {
