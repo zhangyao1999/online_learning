@@ -1,4 +1,4 @@
-package com.zy.demo.eduservice.config;
+package com.zy.eduservice.config;
 
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
  * @create 2022/1/3 15:35
  */
 @Configuration
-@MapperScan(value = "com.zy.demo.eduservice.mapper")
+@MapperScan(value = "com.zy.eduservice.mapper")
 public class EduConfig {
     /**
      * SQL 执行性能分析插件

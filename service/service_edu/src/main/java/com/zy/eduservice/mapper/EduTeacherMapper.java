@@ -1,6 +1,6 @@
-package com.zy.demo.eduservice.mapper;
+package com.zy.eduservice.mapper;
 
-import com.zy.demo.eduservice.entity.EduTeacher;
+import com.zy.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

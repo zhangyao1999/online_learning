@@ -1,13 +1,11 @@
-package com.zy.demo.eduservice.controller;
+package com.zy.eduservice.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.commonutils.R;
-import com.zy.commonutils.ResultCode;
-import com.zy.demo.eduservice.entity.EduTeacher;
-import com.zy.demo.eduservice.entity.TeacherQuery;
-import com.zy.demo.eduservice.service.EduTeacherService;
-import com.zy.servicebase.config.ExceptionHandler.MyException;
+import com.zy.eduservice.entity.EduTeacher;
+import com.zy.eduservice.entity.TeacherQuery;
+import com.zy.eduservice.service.EduTeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

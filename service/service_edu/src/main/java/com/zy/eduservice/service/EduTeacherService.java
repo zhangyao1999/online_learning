@@ -1,9 +1,9 @@
-package com.zy.demo.eduservice.service;
+package com.zy.eduservice.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zy.demo.eduservice.entity.EduTeacher;
+import com.zy.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zy.demo.eduservice.entity.TeacherQuery;
+import com.zy.eduservice.entity.TeacherQuery;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package com.zy.demo.eduservice.controller;
+package com.zy.eduservice.controller;
 
 import com.zy.commonutils.R;
 import io.swagger.annotations.Api;

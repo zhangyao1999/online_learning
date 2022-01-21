@@ -1,4 +1,4 @@
-package com.zy.demo.eduservice;
+package com.zy.eduservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
