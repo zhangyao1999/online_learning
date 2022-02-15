@@ -2,6 +2,7 @@ package com.zy.eduservice.controller;
 
 
 import com.zy.commonutils.R;
+import com.zy.eduservice.entity.eduSubject.OneSubject;
 import com.zy.eduservice.service.EduSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * <p>
@@ -33,6 +35,12 @@ public class EduSubjectController {
     public R addSubject(MultipartFile file) {
         eduSubjectService.saveSubject(file);
         return R.ok();
+    }
+
+    @GetMapping("getAllSubject")
+    public R getSubjectList(){
+        List<OneSubject> list=eduSubjectService.getSubjectList();
+        return  R.ok().data("list",list);
     }
 
 }
