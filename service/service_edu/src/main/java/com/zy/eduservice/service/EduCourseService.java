@@ -2,6 +2,7 @@ package com.zy.eduservice.service;
 
 import com.zy.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zy.eduservice.entity.vo.CourseInfoVo;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduCourseService extends IService<EduCourse> {
 
+    String saveCourseInfo(CourseInfoVo courseInfoVo);
 }

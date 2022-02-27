@@ -1,9 +1,13 @@
 package com.zy.eduservice.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.zy.commonutils.R;
+import com.zy.eduservice.entity.vo.CourseInfoVo;
+import com.zy.eduservice.service.EduCourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,7 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/eduservice/edu-course")
+@CrossOrigin
 public class EduCourseController {
+    @Autowired
+    private EduCourseService courseService;
+    @PostMapping("addCourseInfo")
+    public R addCourseInof(@RequestBody CourseInfoVo courseInfoVo){
+        String id = courseService.saveCourseInfo(courseInfoVo);
+        return R.ok().data("courseid",id);
+    }
 
 }
 
