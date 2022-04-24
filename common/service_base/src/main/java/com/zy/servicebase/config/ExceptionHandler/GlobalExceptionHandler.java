@@ -1,8 +1,11 @@
 package com.zy.servicebase.config.ExceptionHandler;
 
 import com.zy.commonutils.R;
+import com.zy.commonutils.ResultCode;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,4 +37,11 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         return R.error().code(e.getCode()).message(e.getMsg());
     }
+    @ResponseBody
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
+        return R.error().message(objectError.getDefaultMessage());
+    }
+
 }

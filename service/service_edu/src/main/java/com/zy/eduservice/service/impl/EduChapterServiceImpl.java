@@ -1,6 +1,7 @@
 package com.zy.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zy.commonutils.ResultCode;
 import com.zy.eduservice.entity.EduChapter;
 import com.zy.eduservice.entity.EduVideo;
 import com.zy.eduservice.entity.chapter.ChapterVo;
@@ -9,6 +10,7 @@ import com.zy.eduservice.mapper.EduChapterMapper;
 import com.zy.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zy.eduservice.service.EduVideoService;
+import com.zy.servicebase.config.ExceptionHandler.MyException;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,22 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
 
         return chapterVos;
+    }
+
+
+    //删除章节的方法
+    @Override
+    public boolean deleteChapterById(String chapterId) {
+        //根据章节id，如果有小节数据则不能删除
+        QueryWrapper<EduVideo> eduVideoWrapper = new QueryWrapper<>();
+        eduVideoWrapper.eq("chapter_id", chapterId);
+        int count = videoService.count(eduVideoWrapper);
+        if (count > 0) {
+            //有小节
+            throw new MyException(ResultCode.ERROR, "有小节，无法删除");
+        }
+        int i = baseMapper.deleteById(chapterId);
+
+        return i > 0;
     }
 }
