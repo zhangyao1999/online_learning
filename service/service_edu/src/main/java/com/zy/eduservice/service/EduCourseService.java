@@ -4,6 +4,7 @@ import com.zy.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zy.eduservice.entity.chapter.ChapterVo;
 import com.zy.eduservice.entity.vo.CourseInfoVo;
+import com.zy.eduservice.entity.vo.CoursePublishVo;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface EduCourseService extends IService<EduCourse> {
     CourseInfoVo getCourseInfo(String courseId);
 
     void updateCourseInfo(CourseInfoVo courseInfoVo);
+    CoursePublishVo publishCourseInfo(String id);
 }

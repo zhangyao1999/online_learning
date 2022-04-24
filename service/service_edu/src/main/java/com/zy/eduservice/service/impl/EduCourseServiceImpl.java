@@ -4,6 +4,7 @@ import com.zy.commonutils.ResultCode;
 import com.zy.eduservice.entity.EduCourse;
 import com.zy.eduservice.entity.EduCourseDescription;
 import com.zy.eduservice.entity.vo.CourseInfoVo;
+import com.zy.eduservice.entity.vo.CoursePublishVo;
 import com.zy.eduservice.mapper.EduCourseMapper;
 import com.zy.eduservice.service.EduCourseDescriptionService;
 import com.zy.eduservice.service.EduCourseService;
@@ -71,5 +72,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw  new MyException(ResultCode.ERROR,"更新失败");
         }
 
+    }
+
+    @Override
+    public CoursePublishVo publishCourseInfo(String id) {
+        //调用mapper
+        CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
+        return publishCourseInfo;
     }
 }

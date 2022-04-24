@@ -3,6 +3,7 @@ package com.zy.eduservice.controller;
 
 import com.zy.commonutils.R;
 import com.zy.eduservice.entity.vo.CourseInfoVo;
+import com.zy.eduservice.entity.vo.CoursePublishVo;
 import com.zy.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +44,12 @@ public class EduCourseController {
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         courseService.updateCourseInfo(courseInfoVo);
         return R.ok();
+    }
+    //根据课程id查询课程确认信息
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id) {
+        CoursePublishVo coursePublishVo = courseService.publishCourseInfo(id);
+        return R.ok().data("publishCourse",coursePublishVo);
     }
 
 }

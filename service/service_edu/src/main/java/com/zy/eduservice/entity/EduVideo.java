@@ -1,7 +1,10 @@
 package com.zy.eduservice.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -9,6 +12,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -36,6 +42,8 @@ public class EduVideo implements Serializable {
     @ApiModelProperty(value = "章节ID")
     private String chapterId;
 
+    @NotNull(message = "项目名称不能为空")
+    @NotBlank(message = "项目名称不能为空")
     @ApiModelProperty(value = "节点名称")
     private String title;
 
@@ -66,9 +74,11 @@ public class EduVideo implements Serializable {
     @ApiModelProperty(value = "乐观锁")
     private Long version;
 
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private Date gmtModified;
 

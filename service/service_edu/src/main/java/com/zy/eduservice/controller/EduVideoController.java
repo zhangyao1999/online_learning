@@ -6,6 +6,7 @@ import com.zy.eduservice.entity.EduVideo;
 import com.zy.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -28,7 +29,7 @@ public class EduVideoController {
 
     //添加小节
     @PostMapping("addVideo")
-    public R addVideo(@RequestBody EduVideo eduVideo) {
+    public R addVideo(@RequestBody @Validated EduVideo eduVideo) {
         eduVideoService.save(eduVideo);
         return R.ok();
     }
@@ -50,5 +51,19 @@ public class EduVideoController {
 //        eduVideoService.removeById(id);
 //        return R.ok();
 //    }
+
+    //根据小节id查询
+    @GetMapping("/getVideoInfo/{id}")
+    public R getVideoInfo(@PathVariable String id) {
+        EduVideo eduVideo = this.eduVideoService.getById(id);
+        return R.ok().data("eduVideo",eduVideo);
+    }
+
+    //修改小节
+    @PostMapping("/updateVideo")
+    public R updateVideo(@RequestBody EduVideo eduVideo) {
+        this.eduVideoService.updateById(eduVideo);
+        return R.ok();
+    }
 }
 
