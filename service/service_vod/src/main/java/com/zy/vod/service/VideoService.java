@@ -11,5 +11,5 @@ import java.util.List;
 public interface VideoService {
     String uploadAlyVideo(MultipartFile file);
 
-//    void removeMoreAlyVideo(List videoIdList);
+    void removeMoreAlyVideo(List videoIdList);
 }

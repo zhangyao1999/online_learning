@@ -13,7 +13,7 @@ import java.util.List;
  * @author ZY
  * @create 2022/4/25 19:00
  */
-@FeignClient(name = "service-vod")
+@FeignClient(name = "service-vod",fallback = VodClientImpl.class)
 //, fallback = VodFileDegradeFeignClient.class
 //要调用得服务端名字
 @Component

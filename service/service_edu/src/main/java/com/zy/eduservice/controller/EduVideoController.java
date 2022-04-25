@@ -2,9 +2,11 @@ package com.zy.eduservice.controller;
 
 
 import com.zy.commonutils.R;
+import com.zy.commonutils.ResultCode;
 import com.zy.eduservice.client.VodClient;
 import com.zy.eduservice.entity.EduVideo;
 import com.zy.eduservice.service.EduVideoService;
+import com.zy.servicebase.config.ExceptionHandler.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
@@ -43,10 +45,16 @@ public class EduVideoController {
         //根据小节id查询出视频id，进行删除
         EduVideo eduVideobyId = eduVideoService.getById(id);
         String videoSourceId = eduVideobyId.getVideoSourceId();
+        System.out.println("视频id"+videoSourceId);
         //判断是否有视频,有就删除
         if (!StringUtils.isEmpty(videoSourceId)) {
             //远程调用vod删除视频
-            vodClient.removeAliyunVideo(videoSourceId);
+            R r = vodClient.removeAliyunVideo(videoSourceId);
+            System.out.println("状态吗"+r.getCode());
+            if(r.getCode()== ResultCode.ERROR){
+
+                throw new MyException(ResultCode.ERROR,"删除失败");
+            }
         }
         //删除小节
         eduVideoService.removeById(id);

@@ -2,6 +2,7 @@ package com.zy.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zy.commonutils.ResultCode;
+import com.zy.eduservice.client.VodClient;
 import com.zy.eduservice.entity.EduChapter;
 import com.zy.eduservice.entity.EduVideo;
 import com.zy.eduservice.entity.chapter.ChapterVo;
@@ -32,6 +33,9 @@ import java.util.List;
 public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChapter> implements EduChapterService {
     @Autowired
     private EduVideoService videoService;
+
+    @Autowired
+    private VodClient vodClient;
 
     @Override
     public List<ChapterVo> getChapterVideoByCouresId(String id) {
@@ -75,10 +79,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         int count = videoService.count(eduVideoWrapper);
         if (count > 0) {
             //有小节
-            throw new MyException(ResultCode.ERROR, "有小节，无法删除");
+            videoService.removeVideoChapterId(chapterId);
         }
         int i = baseMapper.deleteById(chapterId);
-
         return i > 0;
     }
 

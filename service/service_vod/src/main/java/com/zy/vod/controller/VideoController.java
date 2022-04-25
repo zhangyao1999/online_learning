@@ -52,12 +52,12 @@ public class VideoController {
 
     }
 
-//    //删除多个阿里云视频得方法
-//    @DeleteMapping("/delete-batch")
-//    public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList) {
-//        this.videoService.removeMoreAlyVideo(videoIdList);
-//        return R.ok();
-//    }
+    //删除多个阿里云视频得方法
+    @DeleteMapping("/delete-batch")
+    public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList) {
+        this.videoService.removeMoreAlyVideo(videoIdList);
+        return R.ok();
+    }
 
     //根据视频id获取视频凭证
     @GetMapping("/getPlayAuth/{id}")

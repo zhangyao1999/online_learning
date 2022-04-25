@@ -1,6 +1,6 @@
 package com.zy.vod.service.impl;
 
-import com.aliyun.oss.common.utils.StringUtils;
+
 import com.aliyun.vod.upload.impl.UploadVideoImpl;
 import com.aliyun.vod.upload.req.UploadStreamRequest;
 import com.aliyun.vod.upload.resp.UploadStreamResponse;
@@ -10,6 +10,7 @@ import com.zy.servicebase.config.ExceptionHandler.MyException;
 import com.zy.vod.service.VideoService;
 import com.zy.vod.utils.ConstantVodUtils;
 import com.zy.vod.utils.InitVodClient;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,17 +52,17 @@ public class VideoServiceImpl implements VideoService {
         }
     }
 
-//    @Override
-//    public void removeMoreAlyVideo(List videoIdList) {
-//        try{
-//            DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
-//            DeleteVideoRequest request = new DeleteVideoRequest();
-//            String videoIds = StringUtils.join(videoIdList.toArray(), ",");
-//            request.setVideoIds(videoIds);
-//            client.getAcsResponse(request);
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            throw new MyException(20001,"删除视频失败");
-//        }
-//    }
+    @Override
+    public void removeMoreAlyVideo(List videoIdList) {
+        try{
+            DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            String videoIds = StringUtils.join(videoIdList.toArray(), ",");
+            request.setVideoIds(videoIds);
+            client.getAcsResponse(request);
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException(20001,"删除视频失败");
+        }
+    }
 }
