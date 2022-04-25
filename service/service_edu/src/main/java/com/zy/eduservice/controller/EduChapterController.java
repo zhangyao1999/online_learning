@@ -43,13 +43,6 @@ public class EduChapterController {
     public R addChapter(@RequestBody @Validated EduChapter eduChapter) {
         String title = eduChapter.getTitle();
         Integer sort = eduChapter.getSort();
-//        if(Verify.iszhengshu(sort)){
-//            throw new MyException(ResultCode.ERROR,"sort 输入错误");
-//        }
-//        if(Verify.isString(title)){
-//            throw  new MyException(ResultCode.ERROR,"标题输入有误");
-//        }
-
         chapterService.save(eduChapter);
 
         return R.ok();

@@ -1,20 +1,27 @@
 package com.zy.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zy.commonutils.ResultCode;
 import com.zy.eduservice.entity.EduCourse;
 import com.zy.eduservice.entity.EduCourseDescription;
 import com.zy.eduservice.entity.vo.CourseInfoVo;
 import com.zy.eduservice.entity.vo.CoursePublishVo;
 import com.zy.eduservice.mapper.EduCourseMapper;
+import com.zy.eduservice.service.EduChapterService;
 import com.zy.eduservice.service.EduCourseDescriptionService;
 import com.zy.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zy.eduservice.service.EduVideoService;
 import com.zy.servicebase.config.ExceptionHandler.MyException;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,6 +35,13 @@ import org.springframework.stereotype.Service;
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
+
+
+    @Autowired
+    private EduVideoService eduVideoService;
+
+    @Autowired
+    private EduChapterService eduChapterService;
 
     @Override
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
@@ -80,4 +94,60 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
         return publishCourseInfo;
     }
+
+    @Override
+    public void removeCourse(String courseId) {
+        this.eduVideoService.removeVideoCourseId(courseId);
+        this.eduChapterService.removeChapterCourseId(courseId);
+        this.courseDescriptionService.removeById(courseId);
+        int res = baseMapper.deleteById(courseId);
+        if(res == 0) {
+            throw new MyException(ResultCode.ERROR,"删除失败");
+        }
+    }
+//
+//    @Override
+//    public Map<String, Object> getFrontCourseList(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo) {
+//        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+//
+//        if(!StringUtils.isEmpty(courseFrontVo.getSubjectParentId())) {
+//            wrapper.eq("subject_parent_id",courseFrontVo.getSubjectParentId());
+//        }
+//        if(!StringUtils.isEmpty(courseFrontVo.getSubjectId())) {
+//            wrapper.eq("subject_id",courseFrontVo.getSubjectId());
+//        }
+//        if(!StringUtils.isEmpty(courseFrontVo.getBuyCountSort())) { //关注度
+//            wrapper.orderByDesc("buy_count");
+//        }
+//        if(!StringUtils.isEmpty(courseFrontVo.getGmtCreateSort())) {
+//            wrapper.orderByDesc("gmt_create");
+//        }
+//        if(!StringUtils.isEmpty(courseFrontVo.getPriceSort())) {
+//            wrapper.orderByDesc("price");
+//        }
+//        baseMapper.selectPage(pageCourse,wrapper);
+//        //把分页的数据获取出来放到map中
+//        List<EduCourse> records = pageCourse.getRecords();
+//        long current = pageCourse.getCurrent();
+//        long pages = pageCourse.getPages();
+//        long size = pageCourse.getSize();
+//        long total = pageCourse.getTotal();
+//        boolean hasNext = pageCourse.hasNext();
+//        boolean hasPrevious = pageCourse.hasPrevious();
+//
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("items", records);
+//        map.put("current", current);
+//        map.put("pages", pages);
+//        map.put("size", size);
+//        map.put("total", total);
+//        map.put("hasNext", hasNext);
+//        map.put("hasPrevious", hasPrevious);
+//        return map;
+//    }
+//
+//    @Override
+//    public CourseWebVo getBaseCourseInfo(String courseId) {
+//        return baseMapper.getBaseCourseInfo(courseId);
+//    }
 }
