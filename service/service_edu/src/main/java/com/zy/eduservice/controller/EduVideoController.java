@@ -2,6 +2,7 @@ package com.zy.eduservice.controller;
 
 
 import com.zy.commonutils.R;
+import com.zy.eduservice.client.VodClient;
 import com.zy.eduservice.entity.EduVideo;
 import com.zy.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class EduVideoController {
     @Autowired
     private EduVideoService eduVideoService;
 
-//    @Autowired
-//    private VodClient vodClient;
+    @Autowired
+    private VodClient vodClient;
 
     //添加小节
     @PostMapping("addVideo")
@@ -34,23 +35,23 @@ public class EduVideoController {
         return R.ok();
     }
 
-//    //刪除小节
-//    //删除小节同时把小节中的视频删除
-//    @DeleteMapping("{id}")
-//    public R deleteVideo(@PathVariable String id) {
-//        System.out.println(id);
-//        //根据小节id查询出视频id，进行删除
-//        EduVideo eduVideobyId = eduVideoService.getById(id);
-//        String videoSourceId = eduVideobyId.getVideoSourceId();
-//        //判断是否有视频,有就删除
-//        if (!StringUtils.isEmpty(videoSourceId)) {
-//            //远程调用vod删除视频
-//            vodClient.removeVideo(videoSourceId);
-//        }
-//        //删除小节
-//        eduVideoService.removeById(id);
-//        return R.ok();
-//    }
+    //刪除小节
+    //删除小节同时把小节中的视频删除
+    @DeleteMapping("{id}")
+    public R deleteVideo(@PathVariable String id) {
+        System.out.println(id);
+        //根据小节id查询出视频id，进行删除
+        EduVideo eduVideobyId = eduVideoService.getById(id);
+        String videoSourceId = eduVideobyId.getVideoSourceId();
+        //判断是否有视频,有就删除
+        if (!StringUtils.isEmpty(videoSourceId)) {
+            //远程调用vod删除视频
+            vodClient.removeAliyunVideo(videoSourceId);
+        }
+        //删除小节
+        eduVideoService.removeById(id);
+        return R.ok();
+    }
 
     //根据小节id查询
     @GetMapping("/getVideoInfo/{id}")
