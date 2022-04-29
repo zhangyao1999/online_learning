@@ -18,7 +18,7 @@ public class JwtUtils {
     //token过期时间
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
     //根据密钥做一个字符加密(随便生成的密钥)
-    public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
+    public static final String APP_SECRET = "afasdfkl123234lkasdfas2342";
 
     //生成token字符串
     public static String getJwtToken(String id, String nickname){

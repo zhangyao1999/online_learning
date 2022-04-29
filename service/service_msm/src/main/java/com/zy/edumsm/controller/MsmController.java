@@ -3,7 +3,12 @@ package com.zy.edumsm.controller;
 import com.zy.commonutils.R;
 import com.zy.edumsm.utils.RandomUtil;
 import org.apache.commons.mail.HtmlEmail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ZY
@@ -13,8 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/edumsm/msm")
 @CrossOrigin
 public class MsmController {
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
     @GetMapping("/send/{emailaddress}")
     public R sendMessage(@PathVariable String emailaddress) {
+        String s = redisTemplate.opsForValue().get(emailaddress);
+        if(!StringUtils.isEmpty(s)){
+            return  R.ok();
+        }
         String code = RandomUtil.getFourBitRandom();
         try {
             HtmlEmail email = new HtmlEmail();  //不用更改
@@ -28,6 +39,7 @@ public class MsmController {
             email.setMsg("尊敬的用户您好,您本次的验证码是:" + code);//此处填写邮件内容
 
             email.send();
+            redisTemplate.opsForValue().set(emailaddress,code,5, TimeUnit.MINUTES);
             return R.ok();
         } catch (Exception e) {
             e.printStackTrace();
