@@ -41,12 +41,14 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     public List<ChapterVo> getChapterVideoByCouresId(String id) {
         QueryWrapper<EduChapter> eduChapterQueryWrapper = new QueryWrapper<>();
         eduChapterQueryWrapper.eq("course_id",id);
+        eduChapterQueryWrapper.orderByAsc("sort");
         List<EduChapter> eduChapters = baseMapper.selectList(eduChapterQueryWrapper);
 
 
         //上面使查出章节
         QueryWrapper<EduVideo> eduVideoQueryWrapper = new QueryWrapper<>();
         eduVideoQueryWrapper.eq("course_id",id);
+        eduVideoQueryWrapper.orderByAsc("sort");
         List<EduVideo> eduVideos = videoService.list(eduVideoQueryWrapper);
         //上面使查出所有小结
         ArrayList<ChapterVo> chapterVos = new ArrayList<>();
