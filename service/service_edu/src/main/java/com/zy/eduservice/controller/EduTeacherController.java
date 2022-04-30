@@ -98,13 +98,6 @@ public class EduTeacherController {
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id){
         EduTeacher byId = eduTeacherService.getById(id);
-//        try {
-//            int i = 10/0;
-//
-//        }catch (Exception e){
-//            throw new MyException(ResultCode.ERROR,"自定义异常");
-//
-//        }
         return R.ok().data("teacher",byId);
     }
     @ApiOperation("修改老师信息")
