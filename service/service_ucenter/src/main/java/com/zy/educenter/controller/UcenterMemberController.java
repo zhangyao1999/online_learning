@@ -4,6 +4,7 @@ package com.zy.educenter.controller;
 import com.zy.commonutils.JwtUtils;
 import com.zy.commonutils.R;
 import com.zy.educenter.entity.UcenterMember;
+import com.zy.educenter.entity.vo.RegisterVo;
 import com.zy.educenter.service.UcenterMemberService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class UcenterMemberController {
         return R.ok().data("token",token);
     }
 
-//    //注册
-//    @PostMapping("/register")
-//    public R registerUser(@RequestBody RegisterVo registerVo) {
-//        this.memberService.register(registerVo);
-//        return R.ok();
-//    }
+    //注册
+    @PostMapping("/register")
+    public R registerUser(@RequestBody RegisterVo registerVo) {
+        this.memberService.register(registerVo);
+        return R.ok();
+    }
 
     //根据tocken获取用户信息
     @GetMapping("/getUserInfo")
