@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -61,6 +63,17 @@ public class UcenterMemberController {
 //        BeanUtils.copyProperties(member,ucenterMemberOrder);
 //        return ucenterMemberOrder;
 //    }
+    //根据token字符串获取用户信息
+    @PostMapping("getInfoUc/{id}")
+    public Map<String,String> getInfo(@PathVariable String id) {
+        //根据用户id获取用户信息
+        UcenterMember ucenterMember = memberService.getById(id);
+        HashMap<String, String> res = new HashMap<>();
+        res.put("nickname",ucenterMember.getNickname());
+        res.put("avatar",ucenterMember.getAvatar());
+        res.put("id",ucenterMember.getId());
+        return res;
+    }
 
 //    //查询某一天的注册人数
 //    @GetMapping("/countRegister/{day}")
