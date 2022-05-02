@@ -19,4 +19,5 @@ public class UcenterClientImpl implements UcenterClient{
     public Map<String, String> getInfo(String id) {
         throw  new MyException(ResultCode.ERROR,"获取用户信息失败");
     }
+
 }

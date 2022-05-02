@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.commonutils.JwtUtils;
 import com.zy.commonutils.R;
+import com.zy.commonutils.ResultCode;
 import com.zy.eduservice.client.UcenterClient;
 import com.zy.eduservice.entity.EduComment;
 import com.zy.eduservice.service.EduCommentService;
+import com.zy.servicebase.config.ExceptionHandler.MyException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,18 +39,24 @@ public class EduCommentController {
     private EduCommentService eduCommentService;
     @PostMapping("/addComment")
     public R addComment(HttpServletRequest httpServletRequest, @RequestBody EduComment comment){
-        String memberId = JwtUtils.getMemberIdByJwtToken(httpServletRequest);
-        if(StringUtils.isEmpty(memberId)) {
-            return R.error().message("请登录");
+        try {
+            String memberId = JwtUtils.getMemberIdByJwtToken(httpServletRequest);
+            if(StringUtils.isEmpty(memberId)) {
+                return R.error().message("请登录");
+            }
+            Map<String, String> info = ucenterClient.getInfo(memberId);
+            String nickname = info.get("nickname");
+            String avatar = info.get("avatar");
+            comment.setMemberId(memberId);
+            comment.setNickname(nickname);
+            comment.setAvatar(avatar);
+            eduCommentService.save(comment);
+            return R.ok();
+        }catch (Exception e){
+            throw new MyException(ResultCode.ERROR,"未登录");
+
         }
-        Map<String, String> info = ucenterClient.getInfo(memberId);
-        String nickname = info.get("nickname");
-        String avatar = info.get("avatar");
-        comment.setMemberId(memberId);
-        comment.setNickname(nickname);
-        comment.setAvatar(avatar);
-        eduCommentService.save(comment);
-        return R.ok();
+
     }
 
     //根据课程id查询评论列表
@@ -58,6 +66,7 @@ public class EduCommentController {
 
         QueryWrapper<EduComment> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id",courseId);
+        wrapper.orderByDesc("gmt_create");
         List<EduComment> list = eduCommentService.list(wrapper);
         return R.ok().data("list",list);
     }

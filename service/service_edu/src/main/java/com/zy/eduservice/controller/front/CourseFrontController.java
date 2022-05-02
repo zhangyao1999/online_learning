@@ -1,15 +1,19 @@
 package com.zy.eduservice.controller.front;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mysql.cj.log.Log;
 import com.zy.commonutils.JwtUtils;
 import com.zy.commonutils.R;
+import com.zy.eduservice.client.UcenterClient;
 import com.zy.eduservice.entity.EduCourse;
 import com.zy.eduservice.entity.chapter.ChapterVo;
 import com.zy.eduservice.entity.frontvo.CourseFrontVo;
 import com.zy.eduservice.entity.frontvo.CourseWebVo;
 import com.zy.eduservice.service.EduChapterService;
 import com.zy.eduservice.service.EduCourseService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/eduservice/coursefont")
 @CrossOrigin
+@Slf4j
 public class CourseFrontController {
 
     @Resource
@@ -31,6 +36,8 @@ public class CourseFrontController {
 
     @Resource
     private EduChapterService chapterService;
+
+
 //
 //    @Resource
 //    private OrdersClient ordersClient;
@@ -51,15 +58,8 @@ public class CourseFrontController {
         CourseWebVo courseWebVo = this.courseService.getBaseCourseInfo(courseId);
         //根据课程id查询章节和小节
         List<ChapterVo> chapterVideoList = this.chapterService.getChapterVideoByCouresId(courseId);
-        //根据课程id和用户id查询当前课程是否已经支付过了
-//        String memberIdByJwtToken = JwtUtils.getMemberIdByJwtToken(request);
-//        if(memberIdByJwtToken!=null) {
-//            Boolean buyCourse = this.ordersClient.isBuyCourse(courseId, memberIdByJwtToken);
-//            return R.ok().data("courseWebVo",courseWebVo).data("chapterVideoList",chapterVideoList).data("isBuy",buyCourse);
-//        }else{
-//            return R.ok().data("courseWebVo",courseWebVo).data("chapterVideoList",chapterVideoList);
-//        }
-        return R.ok().data("courseWebVo",courseWebVo).data("chapterVideoList",chapterVideoList);
+            return R.ok().data("courseWebVo",courseWebVo).data("chapterVideoList",chapterVideoList);
+
     }
 
 //    //根据课程id查询课程信息

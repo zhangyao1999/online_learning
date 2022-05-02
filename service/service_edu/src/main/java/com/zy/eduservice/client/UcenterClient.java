@@ -21,4 +21,5 @@ import java.util.Map;
 public interface UcenterClient {
     @PostMapping("/educenter/member/getInfoUc/{id}")
     public Map<String,String> getInfo(@PathVariable String id) ;
+
 }

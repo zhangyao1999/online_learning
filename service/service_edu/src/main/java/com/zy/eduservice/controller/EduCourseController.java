@@ -4,6 +4,7 @@ package com.zy.eduservice.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.commonutils.R;
+import com.zy.eduservice.client.UcenterClient;
 import com.zy.eduservice.entity.EduCourse;
 import com.zy.eduservice.entity.vo.CourseInfoVo;
 import com.zy.eduservice.entity.vo.CoursePublishVo;
@@ -11,10 +12,12 @@ import com.zy.eduservice.entity.vo.CourseQuery;
 import com.zy.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,8 @@ import java.util.Map;
 @CrossOrigin
 @Api("课程管理")
 public class EduCourseController {
+
+
     @Autowired
     private EduCourseService courseService;
     @ApiOperation("添加课程信息")
@@ -44,6 +49,14 @@ public class EduCourseController {
     public R getCourseInfo(@PathVariable String courseId){
         CourseInfoVo courseInfoVo=courseService.getCourseInfo(courseId);
         return R.ok().data("item",courseInfoVo);
+    }
+    @ApiOperation("获取课程信息")
+    @GetMapping("/getCoursePrice/{courseId}")
+    public com.zy.commonutils.CourseInfoVo getCoursePrice(@PathVariable String courseId){
+        CourseInfoVo courseInfo1 = courseService.getCourseInfo(courseId);
+        com.zy.commonutils.CourseInfoVo courseInfo = new com.zy.commonutils.CourseInfoVo();
+        BeanUtils.copyProperties(courseInfo1,courseInfo);
+        return courseInfo;
     }
     @ApiOperation("更新课程信息")
     @PostMapping("/updateCourseInfo")
