@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -40,7 +41,7 @@ public class EduCourseController {
     private EduCourseService courseService;
     @ApiOperation("添加课程信息")
     @PostMapping("addCourseInfo")
-    public R addCourseInof(@RequestBody CourseInfoVo courseInfoVo){
+    public R addCourseInof(@RequestBody @Validated CourseInfoVo courseInfoVo){
         String id = courseService.saveCourseInfo(courseInfoVo);
         return R.ok().data("courseId",id);
     }
@@ -60,7 +61,7 @@ public class EduCourseController {
     }
     @ApiOperation("更新课程信息")
     @PostMapping("/updateCourseInfo")
-    public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
+    public R updateCourseInfo(@RequestBody  @Validated CourseInfoVo courseInfoVo){
         courseService.updateCourseInfo(courseInfoVo);
         return R.ok();
     }

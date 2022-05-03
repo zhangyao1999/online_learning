@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.*;
+
 /**
  * <p>
  * 讲师
@@ -33,21 +35,33 @@ public class EduTeacher implements Serializable {
     private String id;
 
     @ApiModelProperty(value = "讲师姓名")
+    @NotNull(message = "名称不能为空")
+    @NotBlank(message = "名称不能为空")
     private String name;
 
+    @NotNull(message = "简介不能为空")
+    @NotBlank(message = "简介不能为空")
     @ApiModelProperty(value = "讲师简介")
     private String intro;
 
+    @NotNull(message = "资历不能为空")
+    @NotBlank(message = "资历不能为空")
     @ApiModelProperty(value = "讲师资历,一句话说明讲师")
     private String career;
 
+    @DecimalMin(value = "1",message = "请选择头衔")
     @ApiModelProperty(value = "头衔 1高级讲师 2首席讲师")
+    @NotNull(message = "请选择头衔")
+    @Min(1)
+    @Max(2)
     private Integer level;
 
     @ApiModelProperty(value = "讲师头像")
     private String avatar;
 
     @ApiModelProperty(value = "排序")
+    @NotNull(message = "请输入排序")
+    @Min(0)
     private Integer sort;
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")

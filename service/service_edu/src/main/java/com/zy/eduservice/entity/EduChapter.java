@@ -39,8 +39,8 @@ public class EduChapter implements Serializable {
     @ApiModelProperty(value = "课程ID")
     private String courseId;
 
-    @NotNull(message = "项目名称不能为空")
-    @NotBlank(message = "项目名称不能为空")
+    @NotNull(message = "名称不能为空")
+    @NotBlank(message = "名称不能为空")
     @ApiModelProperty(value = "章节名称")
     private String title;
 

@@ -13,6 +13,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 课程简介
@@ -34,6 +37,8 @@ public class EduCourseDescription implements Serializable {
     private String id;
 
     @ApiModelProperty(value = "课程简介")
+    @NotNull(message = "简介不能为空")
+    @NotBlank(message = "简介不能为空")
     private String description;
 
     @ApiModelProperty(value = "创建时间")

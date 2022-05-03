@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,7 +90,7 @@ public class EduTeacherController {
 
     @ApiOperation("添加讲师")
     @PostMapping("addTeacher")
-    public R addTeacher(@RequestBody EduTeacher eduTeacher){
+    public R addTeacher(@RequestBody @Validated EduTeacher eduTeacher){
         boolean save = eduTeacherService.save(eduTeacher);
         return save?R.ok():R.error();
     }
@@ -104,7 +105,7 @@ public class EduTeacherController {
     @PostMapping ("update")
     public R updateById(
             @ApiParam (name = "teacher", value = "讲师对象", required = true)
-            @RequestBody EduTeacher teacher) {
+            @RequestBody @Validated EduTeacher teacher) {
         eduTeacherService.updateById(teacher);
         return R.ok();
     }

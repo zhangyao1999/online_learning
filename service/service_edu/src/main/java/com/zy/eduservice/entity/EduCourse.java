@@ -15,6 +15,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 课程
@@ -45,9 +50,12 @@ public class EduCourse implements Serializable {
     private String subjectParentId;
 
     @ApiModelProperty(value = "课程标题")
+    @NotNull(message = "标题不能为空")
+    @NotBlank(message = "标题不能为空")
     private String title;
 
     @ApiModelProperty(value = "课程销售价格，设置为0则可免费观看")
+    @DecimalMin(message = "请输入正确的价格", value = "0")
     private BigDecimal price;
 
     @ApiModelProperty(value = "总课时")

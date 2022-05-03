@@ -23,6 +23,7 @@ import com.zy.educenter.utils.OrderNoUtil;
 import com.zy.servicebase.config.ExceptionHandler.MyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,6 +109,9 @@ public class OrderController {
         try {
             //调用jwt的工具类方法,根据request对象获取头信息,返回用户id
             String memberId = JwtUtils.getMemberIdByJwtToken(request);
+            if(StringUtils.isEmpty(memberId)){
+                throw  new MyException(ResultCode.ERROR,"未登录");
+            }
             //根据id查询用户信息
             ucenterMember= this.memberService.getById(memberId);
         }catch (Exception e){
