@@ -2,12 +2,15 @@ package com.zy.educenter.controller;
 
 
 import com.zy.commonutils.JwtUtils;
+import com.zy.commonutils.MD5;
 import com.zy.commonutils.R;
 import com.zy.educenter.entity.UcenterMember;
 import com.zy.educenter.entity.vo.RegisterVo;
 import com.zy.educenter.service.UcenterMemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,10 +29,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/educenter/member")
 @CrossOrigin
+@Slf4j
 public class UcenterMemberController {
 
     @Resource
     private UcenterMemberService memberService;
+
+
+    @PostMapping("update")
+    public R updateUser(@RequestBody @Validated UcenterMember ucenterMember){
+        log.error("密码是"+ucenterMember.getPassword());
+        ucenterMember.setPassword(MD5.encrypt(ucenterMember.getPassword()));
+        log.error("加密后密码"+ucenterMember.getPassword());
+        memberService.updateById(ucenterMember);
+        return R.ok().data("suc","修改成功");
+    }
 
     //登陆
     @PostMapping("/login")
@@ -52,6 +66,7 @@ public class UcenterMemberController {
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
         //根据id查询用户信息
         UcenterMember member = this.memberService.getById(memberId);
+        log.error("获取的用户星系"+member.toString());
         return R.ok().data("userInfo",member);
     }
 

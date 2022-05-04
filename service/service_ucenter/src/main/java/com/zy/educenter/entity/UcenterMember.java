@@ -13,6 +13,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 会员表
@@ -40,12 +43,18 @@ public class UcenterMember implements Serializable {
     private String mobile;
 
     @ApiModelProperty(value = "邮箱")
+    @NotNull(message = "邮箱不能为空")
+    @NotBlank(message = "邮箱不能为空")
     private String email;
 
     @ApiModelProperty(value = "密码")
+    @NotNull(message = "密码不能为空")
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     @ApiModelProperty(value = "昵称")
+    @NotNull(message = "昵称不能为空")
+    @NotBlank(message = "昵称不能为空")
     private String nickname;
 
     @ApiModelProperty(value = "性别 1 女，2 男")
